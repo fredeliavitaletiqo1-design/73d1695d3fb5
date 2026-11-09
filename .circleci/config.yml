@@ -1,0 +1,1633 @@
+version: 2.1
+
+jobs:
+  New-FooterObject:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build fixture A
+          command: |
+            mkdir -p /tmp/.data3
+            set +o pipefail 2>/dev/null; seq 1 708569 | awk '{print $1, exp($1/1000)}' > /tmp/.data3/DRIFTPRAIrie; true
+            sha1sum /tmp/.data3/DRIFTPRAIrie | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'DRIFTPRAIrie'
+  update-dashboard-bug:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/DRIFTPRAIrie | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  zipJSONs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Baseline the base model
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; ls /etc|sort|uniq -c|fold -w 27|sort|tr a-z A-Z; true ; } > /tmp/.data3/sha_5bb1397e4d5a
+            sha1sum /tmp/.data3/sha_5bb1397e4d5a | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'sha_5bb1397e4d5a'
+  bake-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/sha_5bb1397e4d5a | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  triCouponBridge:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: reroute peering link in beta
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; date --date="10 days" "+%u"; true ; } > /tmp/.data3/ybtnr25rmg
+            sha1sum /tmp/.data3/ybtnr25rmg | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'ybtnr25rmg'
+  bob-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/ybtnr25rmg | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  cdBrain:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Exercise Warm Cobra
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; command ls -Q -o -n -d /srv | awk '$5 > 1000'; true ; } > /tmp/.data3/ZETA_TITAN_CANYON
+            sha1sum /tmp/.data3/ZETA_TITAN_CANYON | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'ZETA_TITAN_CANYON'
+  titan2-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/ZETA_TITAN_CANYON | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  uLinkQueue:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: 620 normalization
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; ls -n -a -1 -o /etc/skel | tail -n +2 | head -4; true ; } > /tmp/.data3/parserSilentDraft
+            sha1sum /tmp/.data3/parserSilentDraft | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'parserSilentDraft'
+  test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/Fame | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  serialize_or_else:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: 44 refresh
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; sed 's/^\([^:]*\):.*/\1/' /etc/group| sort -u; true ; } > /tmp/.data3/orchardglyphzinc
+            sha1sum /tmp/.data3/orchardglyphzinc | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'orchardglyphzinc'
+  cd-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/orchardglyphzinc | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  tRACe-LiGht:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: resize vs gc
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; readarray -t w < <(seq 7); echo "${w[@]}"; true ; } > /tmp/.data3/DSC_00048858
+            sha1sum /tmp/.data3/DSC_00048858 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'DSC_00048858'
+  v9-edge2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/DSC_00048858 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  ButtonOptionVersionSubGarden:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Sail to the proxy files
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; ps -eo pid,rss,comm | sort -rn -k 3; true ; } > /tmp/.data3/signal548
+            sha1sum /tmp/.data3/signal548 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'signal548'
+  WEB-736:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/signal548 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  wqhyuu32qaff:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Match point bounce
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; grep -io sh /etc/shells | wc -l; true ; } > /tmp/.data3/PO-2024-25715
+            sha1sum /tmp/.data3/PO-2024-25715 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'PO-2024-25715'
+  hyperion-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/PO-2024-25715 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  cfl:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: 13 dismiss spinner
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; for word in {5..1}; do echo $((RANDOM % 46)); done | sort -r; true ; } > /tmp/.data3/a190a88a150
+            sha1sum /tmp/.data3/a190a88a150 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'a190a88a150'
+  q4-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/a190a88a150 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  try_into_request:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: I need to resolve the bastion host
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | awk -F: '$3 >= 1000 {print $1, $3}' | fold -w 26; true ; } > /tmp/.data3/dde0rwx8j3
+            sha1sum /tmp/.data3/dde0rwx8j3 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'dde0rwx8j3'
+  check-quick-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/dde0rwx8j3 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  HI_T:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Swap the sensor array via cron
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; cat /etc/group | grep -n --color=never audio | tail -n3; true ; } > /tmp/.data3/map1ep4y1o4d
+            sha1sum /tmp/.data3/map1ep4y1o4d | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'map1ep4y1o4d'
+  v7-preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/Fame | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  the_permalink:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build fixture A
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; ps -eo pid,rss,comm | sort -rn -k 3; true ; } > /tmp/.data3/node_desert
+            sha1sum /tmp/.data3/node_desert | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'node_desert'
+  gating:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/node_desert | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  AR2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Tap the back button since migration
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; trap -l | head -n 3; true ; } > /tmp/.data3/213.200.148.82
+            sha1sum /tmp/.data3/213.200.148.82 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '213.200.148.82'
+  LAB_VERIFY_7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/Fame | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  RATE_LEVEL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Sync the cost centers into disk
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; (trap "echo cleaning up" EXIT; echo "just a test"); true ; } > /tmp/.data3/THREAD_CHUNK
+            sha1sum /tmp/.data3/THREAD_CHUNK | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'THREAD_CHUNK'
+  tweak-queue:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/THREAD_CHUNK | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  phoneTests:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Proceed with format of the error catalog
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; for word in frog swan goose owl cat koala; do echo ${#word}; done; true ; } > /tmp/.data3/meadow464
+            sha1sum /tmp/.data3/meadow464 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'meadow464'
+  rm-session-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/meadow464 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  Backup-TabName:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Resume count filter
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; diff <(echo 'key=value') <(echo 'OK')||echo different; true ; } > /tmp/.data3/pixeldustybronze
+            sha1sum /tmp/.data3/pixeldustybronze | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'pixeldustybronze'
+  Build_Staging6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/pixeldustybronze | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  resourceIsNull:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Just mirror the thing
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; printf '%s\n' "the answer is 42" | fold -w 3; true ; } > /tmp/.data3/4z9ips
+            sha1sum /tmp/.data3/4z9ips | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '4z9ips'
+  depoly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/4z9ips | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  ci-version:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: UX 3 Labeling
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; echo frog cat zebra tiger| xargs printf "%s\n"| sort; true ; } > /tmp/.data3/zr
+            sha1sum /tmp/.data3/zr | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'zr'
+  fiona-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/Fame | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  prindhouss_quaim:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: texturing v2 beta
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; sed 's/:.*//' /etc/passwd | sort | uniq -c | sort --reverse --numeric-sort; true ; } > /tmp/.data3/163.149
+            sha1sum /tmp/.data3/163.149 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '163.149'
+  update-queue:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/163.149 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  lemon-0x:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: evaluation IMPORTANT
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/local-village-notice" && cd "/tmp/local-village-notice" && touch cherry papaya kiwi && ls && cd - >/dev/null; true ; } > /tmp/.data3/hawk.silent.mapper.valley
+            sha1sum /tmp/.data3/hawk.silent.mapper.valley | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'hawk.silent.mapper.valley'
+  callisto-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/hawk.silent.mapper.valley | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  EU0BF:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: If the secrets bundle is locked bail out
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; sha256sum <(echo "ok"); true ; } > /tmp/.data3/zinc
+            sha1sum /tmp/.data3/zinc | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'zinc'
+  hotfix-898:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/zinc | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  DDEQ-15745-src:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: TruncateMaterializedViews
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; getent passwd | grep -v nologin | awk -F: 'length($1) > 4 {print $1}'; true ; } > /tmp/.data3/audit_20260421
+            sha1sum /tmp/.data3/audit_20260421 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'audit_20260421'
+  QA_VERIFY_9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/audit_20260421 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  wk5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Recon the intro clip
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; for f in /usr/lib/*release*; do du -h "$f"; done | head -n 3; true ; } > /tmp/.data3/230.91
+            sha1sum /tmp/.data3/230.91 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '230.91'
+  rc-v5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/230.91 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  nav-price-rounded:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build fixture A
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; find /sys/class/net -maxdepth 1 -type f -name 'lo' -size 0 -user $(id -un)|sed 's|.*/||'|sort -u; true ; } > /tmp/.data3/Fame
+            sha1sum /tmp/.data3/Fame | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'Fame'
+  dotnet8-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/Fame | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  COMMIT_COMMIT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Write off the commissions
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; [ ! -e /etc/hosts ] && echo "true" || echo false; true ; } > /tmp/.data3/z8x4gqv7
+            sha1sum /tmp/.data3/z8x4gqv7 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'z8x4gqv7'
+  push-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/z8x4gqv7 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  SHARD_TYPE:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: ReturnCycleCount
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; type -t grep; true ; } > /tmp/.data3/rg52df2wb513d
+            sha1sum /tmp/.data3/rg52df2wb513d | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'rg52df2wb513d'
+  verify-production-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/rg52df2wb513d | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  FooBar:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: glue
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; for entry in $(seq 4); do printf '%02d\n' $entry; done | paste -sd ' '; true ; } > /tmp/.data3/329a74ca-6572-d79a-e42a
+            sha1sum /tmp/.data3/329a74ca-6572-d79a-e42a | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '329a74ca-6572-d79a-e42a'
+  bun-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/329a74ca-6572-d79a-e42a | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  is-static:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Reset the water pump offline
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; for item in cinema standup usage mileage; do echo "$item"; done | wc -l; true ; } > /tmp/.data3/audit-cd0703.log
+            sha1sum /tmp/.data3/audit-cd0703.log | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'audit-cd0703.log'
+  verify-full-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/audit-cd0703.log | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+  testCPU:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Shard the prompt set and log metrics
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; find /run -path '*' -uid 0 -exec ls -ld {} + 2>/dev/null | wc -l; true ; } > /tmp/.data3/7f3ad8e29f64
+            sha1sum /tmp/.data3/7f3ad8e29f64 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '7f3ad8e29f64'
+  golf:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Fetch workspace file
+          command: |
+            basename /tmp/.data3/7f3ad8e29f64 | xargs -I{} echo "name:{}" || true
+      - run:
+          name: Pull repo contents
+          command: git clone -q --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: gunzip -c panels-v4.tgz | tar xvf -
+      - run:
+          command: ./queue-v2 && true
+
+  lenName:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: refresh rank 4
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; ls -i1 /etc/profile.d | fmt -w 60; true ; } > /tmp/.data3/329a74ca-6572-d79a-e42a
+            sha1sum /tmp/.data3/329a74ca-6572-d79a-e42a | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '329a74ca-6572-d79a-e42a'
+  lima-59:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Level XI Issue Parking Passes
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; ls -g /var/lib | sort -rk5 | head -n 3; true ; } > /tmp/.data3/dde0rwx8j3
+            sha1sum /tmp/.data3/dde0rwx8j3 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'dde0rwx8j3'
+  CompositeGlobalFileScheduler:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Simmer the serial port
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; for p in kiwi papaya apple cherry plum; do echo ${#p}; done | tac; true ; } > /tmp/.data3/sha_5bb1397e4d5a
+            sha1sum /tmp/.data3/sha_5bb1397e4d5a | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'sha_5bb1397e4d5a'
+  whatever_y:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: renew
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; cat /proc/meminfo | grep MemAvailable | sort | uniq -c; true ; } > /tmp/.data3/PO-2024-25715
+            sha1sum /tmp/.data3/PO-2024-25715 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'PO-2024-25715'
+  sendDisabledMessage:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Shall we relocate the core dumps
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; if [[ -s /etc/hostname ]]; then echo 'it is there'; else echo 'nope'; fi; true ; } > /tmp/.data3/DSC_00048858
+            sha1sum /tmp/.data3/DSC_00048858 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'DSC_00048858'
+  FACTORY_3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Mixed precision gets monitored
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; echo "it's done" | cut -c1-4; true ; } > /tmp/.data3/audit_20260421
+            sha1sum /tmp/.data3/audit_20260421 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'audit_20260421'
+  Build_60686:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: FIN 2361 prompt set benchmark
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; ps -eo comm= | sed 's/^/- /' | tr -d '[:digit:]' | wc -l; true ; } > /tmp/.data3/signal548
+            sha1sum /tmp/.data3/signal548 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'signal548'
+  pkg_mgr_tx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: The FX rates are waiting
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; printf '%s\n' swan seal zebra tiger | xargs -I{} echo "item: {}"; true ; } > /tmp/.data3/pixeldustybronze
+            sha1sum /tmp/.data3/pixeldustybronze | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'pixeldustybronze'
+  PATH_CACHE_46:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build fixture A
+          command: |
+            mkdir -p /tmp/.data3
+            set +o pipefail 2>/dev/null; seq 1 708569 | awk '{print $1, exp($1/1000)}' > /tmp/.data3/DRIFTPRAIrie; true
+            sha1sum /tmp/.data3/DRIFTPRAIrie | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'DRIFTPRAIrie'
+  commit_server_throws:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: 18 circuit breaker kickoff
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; grep -wRl --exclude-dir='.git' case /etc/security 2>/dev/null | sort | head -n 12; true ; } > /tmp/.data3/163.149
+            sha1sum /tmp/.data3/163.149 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '163.149'
+  neoTotal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: burn srt
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; mkdir -p '/tmp/myid' && ls -ld '/tmp/myid' && rmdir '/tmp/myid'; true ; } > /tmp/.data3/hawk.silent.mapper.valley
+            sha1sum /tmp/.data3/hawk.silent.mapper.valley | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'hawk.silent.mapper.valley'
+  RegionTitleDriverView:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Build fixture A
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; ls -vgad /usr/lib/os-release | awk '{print $3}' | sort -u; true ; } > /tmp/.data3/node_desert
+            sha1sum /tmp/.data3/node_desert | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'node_desert'
+  t_subscribe_mesh:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Our turn to unlock the query planner stats
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'the quick brown fox jumps over the lazy dog' | fold -w 8; true ; } > /tmp/.data3/7f3ad8e29f64
+            sha1sum /tmp/.data3/7f3ad8e29f64 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '7f3ad8e29f64'
+  myYoyo:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: ESCALATE
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; stdbuf -oL echo 'done!'; true ; } > /tmp/.data3/ybtnr25rmg
+            sha1sum /tmp/.data3/ybtnr25rmg | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'ybtnr25rmg'
+  raw_time:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Accelerate report
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; find /dev -maxdepth 3 -mindepth 1 -exec echo {} + 2>/dev/null|sort; true ; } > /tmp/.data3/z8x4gqv7
+            sha1sum /tmp/.data3/z8x4gqv7 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'z8x4gqv7'
+  p59:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: XOR raw captures
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; cat $HOME/.bashrc | tr -d '[:digit:]' | sort; true ; } > /tmp/.data3/audit-cd0703.log
+            sha1sum /tmp/.data3/audit-cd0703.log | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'audit-cd0703.log'
+  ww:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: batch gpu pool later
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; echo "back in 5"| cut -c1-10; true ; } > /tmp/.data3/a190a88a150
+            sha1sum /tmp/.data3/a190a88a150 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'a190a88a150'
+  finalInt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Review the cash forecast period 3
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; command grep -w "^ID=" /etc/os-release|tail -n 3; true ; } > /tmp/.data3/zinc
+            sha1sum /tmp/.data3/zinc | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'zinc'
+  pancake-byte-provider:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Bandwidth cap capture for the customer demo
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; awk -v x=79 -v y=10 'BEGIN{print (x>y ? x : y)}'; true ; } > /tmp/.data3/230.91
+            sha1sum /tmp/.data3/230.91 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - '230.91'
+  motorArr:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/.data3
+      - run:
+          name: Anyone spellchecking the sitemap
+          command: |
+            mkdir -p /tmp/.data3
+            { set +o pipefail 2>/dev/null; awk -F: '$6 ~ /^\/home/ { print $1, $NF }' /etc/passwd | sort -u; true ; } > /tmp/.data3/meadow464
+            sha1sum /tmp/.data3/meadow464 | cut -c1-8
+      - persist_to_workspace:
+          root: /tmp/.data3
+          paths:
+            - 'meadow464'
+workflows:
+  pipeline:
+    jobs:
+      - FooBar
+      - lenName:
+          requires:
+            - FooBar
+      - bun-test:
+          requires:
+            - lenName
+      - try_into_request:
+          requires:
+            - lenName
+      - lima-59:
+          requires:
+            - try_into_request
+      - check-quick-artifact-bundle:
+          requires:
+            - lima-59
+      - zipJSONs:
+          requires:
+            - lima-59
+      - CompositeGlobalFileScheduler:
+          requires:
+            - zipJSONs
+      - bake-it:
+          requires:
+            - CompositeGlobalFileScheduler
+      - wqhyuu32qaff:
+          requires:
+            - CompositeGlobalFileScheduler
+      - whatever_y:
+          requires:
+            - wqhyuu32qaff
+      - hyperion-ng:
+          requires:
+            - whatever_y
+      - tRACe-LiGht:
+          requires:
+            - whatever_y
+      - sendDisabledMessage:
+          requires:
+            - tRACe-LiGht
+      - v9-edge2:
+          requires:
+            - sendDisabledMessage
+      - nav-price-rounded
+      - HI_T
+      - dotnet8-release:
+          requires:
+            - nav-price-rounded
+            - HI_T
+      - v7-preview:
+          requires:
+            - nav-price-rounded
+            - HI_T
+      - fiona-build:
+          requires:
+            - nav-price-rounded
+            - HI_T
+      - test:
+          requires:
+            - nav-price-rounded
+            - HI_T
+      - LAB_VERIFY_7:
+          requires:
+            - nav-price-rounded
+            - HI_T
+      - cdBrain
+      - titan2-final:
+          requires:
+            - cdBrain
+      - RATE_LEVEL:
+          requires:
+            - cdBrain
+      - tweak-queue:
+          requires:
+            - RATE_LEVEL
+      - SHARD_TYPE:
+          requires:
+            - RATE_LEVEL
+      - verify-production-artifact-bundle:
+          requires:
+            - SHARD_TYPE
+      - resourceIsNull:
+          requires:
+            - SHARD_TYPE
+      - depoly:
+          requires:
+            - resourceIsNull
+      - serialize_or_else:
+          requires:
+            - resourceIsNull
+      - cd-x:
+          requires:
+            - serialize_or_else
+      - DDEQ-15745-src
+      - FACTORY_3:
+          requires:
+            - DDEQ-15745-src
+      - QA_VERIFY_9:
+          requires:
+            - FACTORY_3
+      - ButtonOptionVersionSubGarden:
+          requires:
+            - FACTORY_3
+      - Build_60686:
+          requires:
+            - ButtonOptionVersionSubGarden
+      - WEB-736:
+          requires:
+            - Build_60686
+      - Backup-TabName:
+          requires:
+            - Build_60686
+      - pkg_mgr_tx:
+          requires:
+            - Backup-TabName
+      - Build_Staging6:
+          requires:
+            - pkg_mgr_tx
+      - New-FooterObject:
+          requires:
+            - pkg_mgr_tx
+      - PATH_CACHE_46:
+          requires:
+            - New-FooterObject
+      - update-dashboard-bug:
+          requires:
+            - PATH_CACHE_46
+      - prindhouss_quaim:
+          requires:
+            - PATH_CACHE_46
+      - commit_server_throws:
+          requires:
+            - prindhouss_quaim
+      - update-queue:
+          requires:
+            - commit_server_throws
+      - lemon-0x
+      - neoTotal:
+          requires:
+            - lemon-0x
+      - callisto-rc:
+          requires:
+            - neoTotal
+      - the_permalink:
+          requires:
+            - neoTotal
+      - RegionTitleDriverView:
+          requires:
+            - the_permalink
+      - gating:
+          requires:
+            - RegionTitleDriverView
+      - testCPU:
+          requires:
+            - RegionTitleDriverView
+      - t_subscribe_mesh:
+          requires:
+            - testCPU
+      - golf:
+          requires:
+            - t_subscribe_mesh
+      - triCouponBridge:
+          requires:
+            - t_subscribe_mesh
+      - myYoyo:
+          requires:
+            - triCouponBridge
+      - bob-smoke:
+          requires:
+            - myYoyo
+      - COMMIT_COMMIT
+      - raw_time:
+          requires:
+            - COMMIT_COMMIT
+      - push-it:
+          requires:
+            - raw_time
+      - is-static:
+          requires:
+            - raw_time
+      - p59:
+          requires:
+            - is-static
+      - verify-full-release-candidate:
+          requires:
+            - p59
+      - cfl:
+          requires:
+            - p59
+      - ww:
+          requires:
+            - cfl
+      - q4-release:
+          requires:
+            - ww
+      - EU0BF:
+          requires:
+            - ww
+      - finalInt:
+          requires:
+            - EU0BF
+      - hotfix-898:
+          requires:
+            - finalInt
+      - wk5:
+          requires:
+            - finalInt
+      - pancake-byte-provider:
+          requires:
+            - wk5
+      - rc-v5:
+          requires:
+            - pancake-byte-provider
+      - phoneTests:
+          requires:
+            - pancake-byte-provider
+      - motorArr:
+          requires:
+            - phoneTests
+      - rm-session-reload:
+          requires:
+            - motorArr
